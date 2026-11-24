@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: courtyard-kitchen-api
+    runtime: node
+    rootDir: backend
+    plan: starter
+    region: singapore
+    buildCommand: npm install
+    # The idempotent migration runs on startup so it also works on plans
+    # where Render's paid-only preDeployCommand is not available.
+    startCommand: npm run migrate && npm start
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: courtyard-kitchen-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: davidmutemwa007@gmail.com
+      - key: CLIENT_URL
+        sync: false
+
+databases:
+  - name: courtyard-kitchen-db
+    databaseName: courtyard
+    user: courtyard_user
+    plan: basic-256mb
+    region: singapore
