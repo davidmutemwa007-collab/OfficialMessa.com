@@ -22,8 +22,10 @@ services:
         generateValue: true
       - key: ADMIN_EMAIL
         value: davidmutemwa007@gmail.com
-      - key: CLIENT_URL
+      - key: ADMIN_PASSWORD
         sync: false
+      -key: CLIENT_URL
+       sync: false
 
 databases:
   - name: courtyard-kitchen-db
